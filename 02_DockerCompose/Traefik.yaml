@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:banon
+    restart: unless-stopped
+    networks:
+      - traefik
+    command: 
+#      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesResolvers.http.acme.email=<REPLACEME>"
+      - "--certificatesResolvers.http.acme.storage=/le/acme.json"
+      - "--certificatesResolvers.http.acme.dnschallenge=true"
+      - "--certificatesResolvers.http.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesResolvers.http.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53"
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    env_file:
+      - "cloudflare.env"
+    volumes:
+       - /var/run/docker.sock:/var/run/docker.sock:ro
+       - leacme:/le/
+
+networks:
+  traefik:
+    external: true
+    
+volumes:
+  leacme:
