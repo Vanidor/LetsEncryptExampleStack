@@ -14,7 +14,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--certificatesResolvers.http.acme.email=<REPLACEME>"
+      - "--certificatesResolvers.http.acme.email=<REPLACE ME>"
       - "--certificatesResolvers.http.acme.storage=/le/acme.json"
       - "--certificatesResolvers.http.acme.dnschallenge=true"
       - "--certificatesResolvers.http.acme.dnschallenge.provider=cloudflare"
